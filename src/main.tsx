@@ -7,7 +7,7 @@ const originalFetch = window.fetch;
 window.fetch = async (input, init = {}) => {
   const token = localStorage.getItem('token');
   // Garante que headers seja um objeto Headers, não só um literal
-  let headers = init.headers instanceof Headers
+  const headers = init.headers instanceof Headers
     ? init.headers
     : new Headers(init.headers || {});
   if (token) {
