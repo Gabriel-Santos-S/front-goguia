@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import EsqueciSenha from './pages/EsqueciSenha';
 import ConfirmacaoEmail from './pages/Confirmacaoemail'; // Ajustado para o nome que você salvou
 import Home from './pages/home'; // Ajustado para o nome que você salvou
+import TelaAvaliacao from './pages/TelaAvaliacao';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/esqueci-senha" element={<EsqueciSenha />} />
         <Route path="/confirmacao-email" element={<ConfirmacaoEmail />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
       </Routes>
     </BrowserRouter>
   );
