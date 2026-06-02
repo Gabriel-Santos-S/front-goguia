@@ -162,6 +162,7 @@ export default function Agendamentos() {
                   borderRadius: 1.5,
                   "&:hover": { bgcolor: "#162a4a" },
                 }}
+                onClick={() => navigate("/home/pagamento")}
               >
                 RESERVAR
               </Button>
