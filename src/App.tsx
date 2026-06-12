@@ -20,6 +20,7 @@ function App() {
         <Route path="/confirmacao-email" element={<ConfirmacaoEmail />} />
 
         <Route path="/home" element={<Home />} />
+
         {/* <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
         <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
         <Route path="/home/pagamento" element={<Pagamento />} /> */}
