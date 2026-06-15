@@ -24,7 +24,6 @@ function App() {
         {/* <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
         <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
         <Route path="/home/pagamento" element={<Pagamento />} /> */}
-
         <Route path="/meus-roteiros" element={<MeusRoteiros />} />
         <Route path="/favoritos" element={<Favoritos />} />
         <Route path="/configuracoes" element={<Configuracoes />} />
