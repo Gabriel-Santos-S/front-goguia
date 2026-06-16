@@ -8,28 +8,38 @@ import Favoritos from './pages/Favoritos';
 import Home from './pages/home';
 import MeusRoteiros from './pages/MeusRoteiros';
 import Agendamentos from './pages/Agendamentos';
+import { AuthProvider } from './context/AuthContext';
+import { ProtectdRouts } from './context/ProtectdRouts';
+import TelaAvaliacao from './pages/TelaAvaliacao';
+import Pagamento from './pages/Pagamento';
 
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/esqueci-senha" element={<EsqueciSenha />} />
-        <Route path="/confirmacao-email" element={<ConfirmacaoEmail />} />
+      <AuthProvider>
+        <Routes>
+          {/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
+          <Route path="/" element={<Login />} />
+          <Route path="/esqueci-senha" element={<EsqueciSenha />} />
 
-        <Route path="/home" element={<Home />} />
+          <Route element={<ProtectdRouts />} >
+            <Route path="/confirmacao-email" element={<ConfirmacaoEmail />} />
+            <Route path="/home" element={<Home />} />
 
 
-        <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
-        {/* <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
-        <Route path="/home/pagamento" element={<Pagamento />} /> */}
-        <Route path="/meus-roteiros" element={<MeusRoteiros />} />
-        <Route path="/favoritos" element={<Favoritos />} />
-        <Route path="/configuracoes" element={<Configuracoes />} />
+            <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
+            <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
+            <Route path="/home/pagamento" element={<Pagamento />} />
+            <Route path="/meus-roteiros" element={<MeusRoteiros />} />
 
-      </Routes>
+            <Route path="/favoritos" element={<Favoritos />} />
+            <Route path="/configuracoes" element={<Configuracoes />} />
+          </Route>
+
+          {/* <Route path="*" element={<NotFound />} /> */}
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

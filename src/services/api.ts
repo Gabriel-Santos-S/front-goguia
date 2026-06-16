@@ -185,3 +185,9 @@ class ApiService {
 
 
 
+export const autenticacaoApi = new ApiService(
+  `${import.meta.env.VITE_AUTENTICACAO_LOCALHOST}`
+)
+
+
+
