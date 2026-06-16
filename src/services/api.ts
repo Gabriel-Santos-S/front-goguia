@@ -198,5 +198,13 @@ export const arquivoApi = new ApiService(
   `${import.meta.env.VITE_ARQUIVO_LOCALHOST}`
 )
 
+export const favoritoApi = new ApiService(
+  `${import.meta.env.VITE_FAVORITO_LOCALHOST}`
+)
+
+export const pessoaAPI = new ApiService(
+  `${import.meta.env.VITE_PESSOA_LOCALHOST}`
+)
+
 
 

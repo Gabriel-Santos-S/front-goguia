@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Mail, Lock, MapPin } from 'lucide-react';
+import { User, Mail, Lock, MapPin, Phone } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Typography } from '@mui/material';
+import { pessoaAPI } from '@/services/api';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -16,10 +17,15 @@ export default function Login() {
     return texto
   });
 
+  const [nameCadastr, setNameCadastr] = useState<string>("");
+  const [telefone, setTelefone] = useState<string>("");
+  const [senhaCadastr, setSenhaCadastr] = useState<string>("");
+  const [emailCadastr, setEmailCadastr] = useState<string>("");
+
+
   const onVerifcPassword = async () => {
     const emailLimpo = email.replace(" ", "");
-    console.log(emailLimpo);
-    
+
     try {
       const isLogin = await login(emailLimpo, password)
       if (isLogin) { navigate('/home') }
@@ -27,6 +33,36 @@ export default function Login() {
     } catch (error) {
       setErrorSubmit(true);
       setPassword("");
+    }
+  }
+
+  const cadastra = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    
+    try {
+      const data = {
+        nome: nameCadastr,
+        email: emailCadastr,
+        senha: senhaCadastr,
+        numTelefone: telefone,
+        codPerfil: 1
+      }
+      const pessoa = pessoaAPI.post("/criar", data)
+      console.log(pessoa);
+      
+
+
+    } catch (error) {
+      console.error('Erro ao cadastrar pessoa');
+
+    } finally {
+      setNameCadastr("")
+      setEmailCadastr("")
+      setTelefone("")
+      setSenhaCadastr("")
+      console.log("Limpo");
+      
     }
   }
 
@@ -78,7 +114,7 @@ export default function Login() {
             />
             <div className="pt-2">
               <button
-                
+
                 type="submit"
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full transition-colors"
               >
@@ -112,34 +148,54 @@ export default function Login() {
           </div>
 
           {/* Campos do Cadastro */}
-          <form className="w-full max-w-sm space-y-4">
+          <form className="w-full max-w-sm space-y-4" method="post" onSubmit={cadastra}>
             <div className="relative text-orange-500">
               <User className="absolute left-3 top-3.5" size={20} />
               <input
+                required
                 type="text"
+                value={nameCadastr}
                 placeholder="Nome Completo"
                 className="w-full p-3 pl-10 bg-white text-gray-800 rounded-sm outline-none focus:ring-2 focus:ring-gray-300"
+                onChange={(e) => setNameCadastr(e.target.value)}
+              />
+            </div>
+            <div className="relative text-orange-500">
+              <Phone className="absolute left-3 top-3.5" size={20} />
+              <input
+                required
+                type="text"
+                value={telefone}
+                placeholder="Telefone"
+                className="w-full p-3 pl-10 bg-white text-gray-800 rounded-sm outline-none focus:ring-2 focus:ring-gray-300"
+                onChange={(e) => setTelefone(e.target.value)}
               />
             </div>
             <div className="relative text-orange-500">
               <Mail className="absolute left-3 top-3.5" size={20} />
               <input
+                required
                 type="email"
+                value={emailCadastr}
                 placeholder="e-mail"
                 className="w-full p-3 pl-10 bg-white text-gray-800 rounded-sm outline-none focus:ring-2 focus:ring-gray-300"
+                onChange={(e) => setEmailCadastr(e.target.value)}
               />
             </div>
             <div className="relative text-orange-500">
               <Lock className="absolute left-3 top-3.5" size={20} />
               <input
+                required
+                value={senhaCadastr}
                 type="password"
                 placeholder="Senha"
                 className="w-full p-3 pl-10 bg-white text-gray-800 rounded-sm outline-none focus:ring-2 focus:ring-gray-300"
+                onChange={(e) => setSenhaCadastr(e.target.value)}
               />
             </div>
             <div className="pt-6 flex justify-center">
               <button
-                type="button"
+                type="submit"
                 className="border-2 border-white text-white font-bold py-2 px-12 rounded-full hover:bg-white hover:text-orange-500 transition-colors"
               >
                 Cadastrar

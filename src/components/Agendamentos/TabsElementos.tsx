@@ -68,7 +68,7 @@ export default function TabsElementos({roteiro}: TabsElementosProps) {
                     display: "flex",
                     alignItems: "center",
                 }}>
-                    <MapaEdit />
+                    <Mapa />
                 </Box>
             </TabPanel>
         </>

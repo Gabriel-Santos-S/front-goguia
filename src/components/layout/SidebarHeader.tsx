@@ -1,10 +1,12 @@
 import Logo from '@/components/Logo';
-import { Bookmark, Home as HomeIcon, List, MessageSquare, User } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { Bookmark, Home as HomeIcon, List, LogOut, MessageSquare, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 
 export const SidebarHeader = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   
   return (
     <header className="w-full p-4 border-b flex flex-wrap items-center justify-between gap-4">
@@ -28,8 +30,12 @@ export const SidebarHeader = () => {
 
       {/* Ações da Direita */}
       <div className="flex items-center gap-6">
-        <button className="text-gray-600 hover:text-orange-500 transition-colors">
-          <MessageSquare size={28} />
+        <button
+          onClick={() => logout()}
+          className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full flex items-center gap-2 transition-colors"
+        >
+          <LogOut size={20} />
+          Sair
         </button>
         <button
           onClick={() => navigate('/configuracoes')}

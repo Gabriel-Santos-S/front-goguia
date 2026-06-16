@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { User, ArrowLeft } from 'lucide-react';
 import Logo from '../components/Logo';
+import SidebarHeader from '@/components/layout/SidebarHeader';
 
 interface DadosUsuario {
   primeiroNome: string;
@@ -74,14 +75,7 @@ export default function Configuracoes() {
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans text-gray-700">
 
-      {/* HEADER */}
-      <header className="flex items-center justify-between px-8 py-3 bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
-        <Logo />
-        <button className="bg-[#F27420] text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-sm hover:bg-[#d65f15] transition-colors flex items-center gap-2">
-          <User className="w-4 h-4" />
-          Minha Conta
-        </button>
-      </header>
+      <SidebarHeader />
 
       {/* CONTEÚDO */}
       <main className="max-w-[900px] w-full mx-auto p-8">
