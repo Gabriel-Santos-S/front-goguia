@@ -53,7 +53,6 @@ export default function TabsElementos({roteiro}: TabsElementosProps) {
                 }}
             >
                 <Tab label="Detalhes" />
-                <Tab label="Agendados" />
                 <Tab label="Mapa / Rota" />
             </Tabs>
 
@@ -62,10 +61,6 @@ export default function TabsElementos({roteiro}: TabsElementosProps) {
             </TabPanel>
 
             <TabPanel value={tab} index={1}>
-                <TabDetalhes roteiro={roteiro} />
-            </TabPanel>
-
-            <TabPanel value={tab} index={2}>
                 <Box sx={{
                     border: `5px solid ${ORANGE}`,
                     borderRadius: 2,

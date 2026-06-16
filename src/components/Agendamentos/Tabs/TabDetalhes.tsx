@@ -56,7 +56,7 @@ export default function TabDetalhes({ roteiro }: TabDetalhesProps) {
                     </Box>
                 </Box>
             </Box>
-            <Stack
+            {/* <Stack
                 direction="row"
                 spacing={3}
                 sx={{ justifyContent: "flex-end", mt: 6, mb: 4 }}
@@ -98,7 +98,7 @@ export default function TabDetalhes({ roteiro }: TabDetalhesProps) {
                         </Typography>
                     </Box>
                 ))}
-            </Stack>
+            </Stack> */}
         </>
     )
 

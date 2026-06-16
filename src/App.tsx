@@ -13,6 +13,7 @@ import { ProtectdRouts } from './context/ProtectdRouts';
 import TelaAvaliacao from './pages/TelaAvaliacao';
 import Pagamento from './pages/Pagamento';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Roteiros from './pages/Roteiros';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ function App() {
             <Route element={<ProtectdRouts />} >
               <Route path="/confirmacao-email" element={<ConfirmacaoEmail />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/roteiros" element={<Roteiros />} />
 
 
               <Route path="/home/tela-avaliacao/:id/detalhes" element={<Agendamentos />} />

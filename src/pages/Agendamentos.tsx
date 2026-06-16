@@ -1,6 +1,7 @@
 
 import TabsElementos from "@/components/Agendamentos/TabsElementos";
-import { roteiroApi } from "@/services/api";
+import SidebarHeader from "@/components/layout/SidebarHeader";
+import { arquivoApi, roteiroApi } from "@/services/api";
 import { Roteiro } from "@/types";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -12,7 +13,7 @@ import 'dayjs/locale/pt-br';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { ArrowLeft, Bookmark, HomeIcon, List, MapPin, MessageSquare, User } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 
@@ -25,44 +26,9 @@ dayjs.extend(timezone);
 dayjs.locale('pt-br');
 dayjs.tz.setDefault('America/Sao_Paulo');
 
-function Header() {
-  const navigate = useNavigate()
-  return (
-    <>
-      {/* Header Completo da Home */}
-      <header className="w-full p-4 border-b flex flex-wrap items-center justify-between gap-4">
-        {/* Logo */}
-        <div className="flex items-center gap-2 text-orange-500">
-          <div className="relative">
-            <MapPin size={36} className="fill-current" />
-            <User size={18} className="absolute top-1.5 left-2 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight">GoGuia</h1>
-        </div>
-
-        {/* Ícones de Navegação Central */}
-        <nav className="flex items-center gap-6 text-indigo-900">
-          <button className="hover:text-orange-500 transition-colors" onClick={() => navigate("/home")}><HomeIcon size={28} /></button>
-          <button className="hover:text-orange-500 transition-colors"><Bookmark size={28} /></button>
-          <button className="hover:text-orange-500 transition-colors"><List size={28} /></button>
-        </nav>
-
-        {/* Ações da Direita */}
-        <div className="flex items-center gap-6">
-          <button className="text-gray-600 hover:text-orange-500 transition-colors">
-            <MessageSquare size={28} />
-          </button>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full flex items-center gap-2 transition-colors">
-            <User size={20} />
-            Minha Conta
-          </button>
-        </div>
-      </header>
-    </>
-  );
-}
 
 export default function Agendamentos() {
+  const [imagen, setImagen] = useState<string | null>("");
   const [formData, setFormData] = useState(dayjs.tz(new Date(), 'America/Sao_Paulo'));
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate()
@@ -73,10 +39,33 @@ export default function Agendamentos() {
     enabled: !!id
   })
 
+  useEffect(() => {
+    const carregarImagens = async () => {
+      if (!roteiro) return;
+
+      const buscarImagem = async (id: number) => {
+        try {
+          const response = await arquivoApi.get<{ url: string }>(`/buscar/${id}`);
+
+          return response.url as string;
+        } catch (error) {
+          console.error("Erro ao buscar imagem");
+          return "";
+        }
+      };
+
+      const url = await buscarImagem(roteiro.id)
+      setImagen(url)
+
+    };
+
+    carregarImagens();
+  }, [roteiro]);
+
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: BG }}>
-      <Header />
+      <SidebarHeader />
       <Container maxWidth="lg" sx={{ py: 3 }}>
         {/* breadcrumb + voltar */}
         <Stack
@@ -117,7 +106,7 @@ export default function Agendamentos() {
         >
           <Box
             component="img"
-            src={"https://vineadei.wordpress.com/wp-content/uploads/2021/06/images28129.jpeg?w=640"}
+            src={imagen || ""}
             alt="Panteão Pátria Liberdade"
             sx={{
               width: "100%",
@@ -176,7 +165,7 @@ export default function Agendamentos() {
         </Box>
 
         <Box sx={{ mt: 4, borderBottom: "1px solid #d6dae0" }}>
-          <TabsElementos roteiro={roteiro}/>
+          <TabsElementos roteiro={roteiro} />
         </Box>
 
       </Container>

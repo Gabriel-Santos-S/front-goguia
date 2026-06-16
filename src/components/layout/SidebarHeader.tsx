@@ -21,7 +21,7 @@ export const SidebarHeader = () => {
         <button onClick={() => navigate('/favoritos')} className="hover:text-orange-500 transition-colors">
           <Bookmark size={28} />
         </button>
-        <button onClick={() => navigate('/meus-roteiros')} className="hover:text-orange-500 transition-colors">
+        <button onClick={() => navigate('/roteiros')} className="hover:text-orange-500 transition-colors">
           <List size={28} />
         </button>
       </nav>
