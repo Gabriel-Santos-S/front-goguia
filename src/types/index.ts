@@ -11,3 +11,11 @@ export type Roteiro = {
   codGuia: number,
   codRota: number,
 }
+
+
+export type Favorito = {
+  id?: number,
+  codRoteiro: number,
+  codPessoa: number,
+  roteiro?: Roteiro,
+}
