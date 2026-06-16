@@ -190,4 +190,13 @@ export const autenticacaoApi = new ApiService(
 )
 
 
+export const roteiroApi = new ApiService(
+  `${import.meta.env.VITE_ROTEIRO_LOCALHOST}`
+)
+
+export const arquivoApi = new ApiService(
+  `${import.meta.env.VITE_ARQUIVO_LOCALHOST}`
+)
+
+
 

@@ -12,35 +12,39 @@ import { AuthProvider } from './context/AuthContext';
 import { ProtectdRouts } from './context/ProtectdRouts';
 import TelaAvaliacao from './pages/TelaAvaliacao';
 import Pagamento from './pages/Pagamento';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          {/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
-          <Route path="/" element={<Login />} />
-          <Route path="/esqueci-senha" element={<EsqueciSenha />} />
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            {/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
+            <Route path="/" element={<Login />} />
+            <Route path="/esqueci-senha" element={<EsqueciSenha />} />
 
-          <Route element={<ProtectdRouts />} >
-            <Route path="/confirmacao-email" element={<ConfirmacaoEmail />} />
-            <Route path="/home" element={<Home />} />
+            <Route element={<ProtectdRouts />} >
+              <Route path="/confirmacao-email" element={<ConfirmacaoEmail />} />
+              <Route path="/home" element={<Home />} />
 
 
-            <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
-            <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
-            <Route path="/home/pagamento" element={<Pagamento />} />
-            <Route path="/meus-roteiros" element={<MeusRoteiros />} />
+              <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
+              <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
+              <Route path="/home/pagamento" element={<Pagamento />} />
+              <Route path="/meus-roteiros" element={<MeusRoteiros />} />
 
-            <Route path="/favoritos" element={<Favoritos />} />
-            <Route path="/configuracoes" element={<Configuracoes />} />
-          </Route>
+              <Route path="/favoritos" element={<Favoritos />} />
+              <Route path="/configuracoes" element={<Configuracoes />} />
+            </Route>
 
-          {/* <Route path="*" element={<NotFound />} /> */}
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+            {/* <Route path="*" element={<NotFound />} /> */}
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
