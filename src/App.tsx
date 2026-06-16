@@ -7,6 +7,7 @@ import ConfirmacaoEmail from './pages/Confirmacaoemail';
 import Favoritos from './pages/Favoritos';
 import Home from './pages/home';
 import MeusRoteiros from './pages/MeusRoteiros';
+import Agendamentos from './pages/Agendamentos';
 
 
 function App() {
@@ -21,8 +22,8 @@ function App() {
         <Route path="/home" element={<Home />} />
 
 
-        {/* <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
         <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
+        {/* <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
         <Route path="/home/pagamento" element={<Pagamento />} /> */}
         <Route path="/meus-roteiros" element={<MeusRoteiros />} />
         <Route path="/favoritos" element={<Favoritos />} />
