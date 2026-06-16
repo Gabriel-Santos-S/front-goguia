@@ -1,11 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import EsqueciSenha from './pages/EsqueciSenha';
-import ConfirmacaoEmail from './pages/Confirmacaoemail'; // Ajustado para o nome que você salvou
-import Home from './pages/home'; // Ajustado para o nome que você salvou
-import TelaAvaliacao from './pages/TelaAvaliacao';
-import Agendamentos from './pages/Agendamentos';
-import Pagamento from './pages/Pagamento';
+import Login from './pages/Login';
+
+import Configuracoes from './pages/Configuracoes';
+import ConfirmacaoEmail from './pages/Confirmacaoemail';
+import Favoritos from './pages/Favoritos';
+import Home from './pages/home';
+import MeusRoteiros from './pages/MeusRoteiros';
+
 
 function App() {
   return (
@@ -17,10 +19,14 @@ function App() {
         <Route path="/confirmacao-email" element={<ConfirmacaoEmail />} />
 
         <Route path="/home" element={<Home />} />
-        <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
-        <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
 
-        <Route path="/home/pagamento" element={<Pagamento />} />
+
+        {/* <Route path="/home/tela-avaliacao" element={<TelaAvaliacao />} />
+        <Route path="/home/tela-avaliacao/detalhes" element={<Agendamentos />} />
+        <Route path="/home/pagamento" element={<Pagamento />} /> */}
+        <Route path="/meus-roteiros" element={<MeusRoteiros />} />
+        <Route path="/favoritos" element={<Favoritos />} />
+        <Route path="/configuracoes" element={<Configuracoes />} />
 
       </Routes>
     </BrowserRouter>
