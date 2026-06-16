@@ -73,7 +73,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {roteiros?.map((roteiro) => (
-              <div key={roteiro.id} className="flex flex-col group cursor-pointer">
+              <div key={roteiro.id} onClick={() => navigate(`/home/tela-avaliacao/${roteiro.id}`)} className="flex flex-col group cursor-pointer">
                 <div className="w-full h-48 bg-gray-300 rounded-2xl relative mb-3 overflow-hidden">
                   <img src={imagens[roteiro.id] || ""}
                     alt={roteiro.titulo}

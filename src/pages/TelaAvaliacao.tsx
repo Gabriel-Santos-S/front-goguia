@@ -1,47 +1,16 @@
 
+import SidebarHeader from "@/components/layout/SidebarHeader";
+import { arquivoApi, roteiroApi } from "@/services/api";
+import { Roteiro } from "@/types";
 import { AppBar, Avatar, Box, Button, Container, CssBaseline, Divider, IconButton, LinearProgress, Rating, Stack, ThemeProvider, Toolbar, Typography, createTheme } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { User, MapPin, Home as HomeIcon, Bookmark, List, MessageSquare, Heart, Star } from 'lucide-react';
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const ORANGE = "#F47B2A";
 
-function Header() {
-  const navigate = useNavigate()
-  return (
-    <>
-      {/* Header Completo da Home */}
-      <header className="w-full p-4 border-b flex flex-wrap items-center justify-between gap-4">
-        {/* Logo */}
-        <div className="flex items-center gap-2 text-orange-500">
-          <div className="relative">
-            <MapPin size={36} className="fill-current" />
-            <User size={18} className="absolute top-1.5 left-2 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight">GoGuia</h1>
-        </div>
-
-        {/* Ícones de Navegação Central */}
-        <nav className="flex items-center gap-6 text-indigo-900">
-          <button className="hover:text-orange-500 transition-colors" onClick={() => navigate("/home")}><HomeIcon size={28} /></button>
-          <button className="hover:text-orange-500 transition-colors"><Bookmark size={28} /></button>
-          <button className="hover:text-orange-500 transition-colors"><List size={28} /></button>
-        </nav>
-
-        {/* Ações da Direita */}
-        <div className="flex items-center gap-6">
-          <button className="text-gray-600 hover:text-orange-500 transition-colors">
-            <MessageSquare size={28} />
-          </button>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full flex items-center gap-2 transition-colors">
-            <User size={20} />
-            Minha Conta
-          </button>
-        </div>
-      </header>
-    </>
-  );
-}
 
 const ratings = [
   { label: "Excelente", value: 92 },
@@ -66,10 +35,48 @@ const reviews = [
 
 export default function TelaAvaliacao() {
   const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>();
+  const [imagen, setImagen] = useState<string | null>("");
+
+
+  const { data: roteiro, isLoading: isLoadingRoteiro } = useQuery({
+    queryKey: ["id_roteiro", id],
+    queryFn: () => roteiroApi.get<Roteiro>(`/${id}`),
+    enabled: !!id
+  })
+
+  useEffect(() => {
+    const carregarImagens = async () => {
+      if (!roteiro) return;
+
+      const buscarImagem = async (id: number) => {
+        try {
+          const response = await arquivoApi.get<{ url: string }>(`/buscar/${id}`);
+
+          return response.url as string;
+        } catch (error) {
+          console.error("Erro ao buscar imagem");
+          return "";
+        }
+      };
+
+      const url = await buscarImagem(roteiro.id)
+      setImagen(url)
+
+    };
+
+    carregarImagens();
+  }, [roteiro]);
+
+  if (isLoadingRoteiro) {
+    return (
+      <h1>Carregando</h1>
+    )
+  }
 
   return (
     <Box sx={{ bgcolor: "#fff", minHeight: "100vh" }}>
-      <Header />
+      <SidebarHeader />
       <Container maxWidth="lg" sx={{ py: 6 }}>
         <Box
           sx={{
@@ -82,7 +89,7 @@ export default function TelaAvaliacao() {
           <Box sx={{ position: "relative" }}>
             <Box
               component="img"
-              src={"https://vineadei.wordpress.com/wp-content/uploads/2021/06/images28129.jpeg?w=640"}
+              src={imagen || ""}
               alt="Catedral da fé"
               sx={{
                 width: "100%",
@@ -111,7 +118,7 @@ export default function TelaAvaliacao() {
           <Stack spacing={3} sx={{ pt: { md: 4 } }}>
             <Box>
               <Typography variant="h3" sx={{ fontWeight: 800, color: "#111", fontSize: 36 }}>
-                Catedral da fé
+                {roteiro?.titulo}
               </Typography>
               <Stack direction="row" spacing={1} sx={{ alignItems: "center", mt: 1 }}>
                 <Typography sx={{ color: "#555" }}>Samuel Dantas · 5.0</Typography>
@@ -133,7 +140,7 @@ export default function TelaAvaliacao() {
                   textTransform: "none",
                   "&:hover": { bgcolor: "#e06d20" },
                 }}
-                onClick={() => navigate("/home/tela-avaliacao/detalhes")}
+                onClick={() => navigate(`/home/tela-avaliacao/${id}/detalhes`)}
               >
                 Reserve Agora!
               </Button>

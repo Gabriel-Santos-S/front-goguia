@@ -3,6 +3,7 @@ import 'dayjs/locale/pt-br';
 import { useState } from "react";
 import TabDetalhes from "./Tabs/TabDetalhes";
 import Mapa from "../Mapa";
+import { Roteiro } from "@/types";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -10,9 +11,13 @@ interface TabPanelProps {
     value: number;
 }
 
+interface TabsElementosProps {
+    roteiro: Roteiro
+}
+
 const ORANGE = "#F47B2A";
 
-export default function TabsElementos() {
+export default function TabsElementos({roteiro}: TabsElementosProps) {
     const [tab, setTab] = useState(0);
 
     function TabPanel(props: TabPanelProps) {
@@ -52,11 +57,11 @@ export default function TabsElementos() {
             </Tabs>
 
             <TabPanel value={tab} index={0}>
-                <TabDetalhes />
+                <TabDetalhes roteiro={roteiro} />
             </TabPanel>
 
             <TabPanel value={tab} index={1}>
-                <TabDetalhes />
+                <TabDetalhes roteiro={roteiro} />
             </TabPanel>
 
             <TabPanel value={tab} index={2}>

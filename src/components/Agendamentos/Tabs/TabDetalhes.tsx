@@ -1,3 +1,4 @@
+import { Roteiro } from "@/types";
 import { Box, Stack, Typography } from "@mui/material";
 import 'dayjs/locale/pt-br';
 import { MessagesSquare, Star } from "lucide-react";
@@ -7,7 +8,11 @@ const ORANGE = "#F47B2A";
 const NAVY = "#1F3A66";
 const BG = "#eef0f2";
 
-export default function TabDetalhes() {
+interface TabDetalhesProps {
+    roteiro: Roteiro
+}
+
+export default function TabDetalhes({ roteiro }: TabDetalhesProps) {
 
     return (
         <>
@@ -22,7 +27,7 @@ export default function TabDetalhes() {
                 <Stack spacing={2}>
                     <Box>
                         <Typography sx={{ color: NAVY, fontWeight: 700 }}>Local</Typography>
-                        <Typography sx={{ color: "#3a4554" }}>Brasília / Df</Typography>
+                        <Typography sx={{ color: "#3a4554" }}>{roteiro.local}</Typography>
                     </Box>
                     <Box>
                         <Typography sx={{ color: NAVY, fontWeight: 700 }}>
@@ -46,21 +51,7 @@ export default function TabDetalhes() {
                         }}
                     >
                         <Typography sx={{ mb: 1 }}>
-                            Neste roteiro, você terá uma imersão na história e na identidade
-                            nacional do Brasil. A experiência começa com a apresentação da
-                            arquitetura única do monumento, projetado por Oscar Niemeyer,
-                            seguida por uma caminhada guiada pelos espaços internos.
-                        </Typography>
-                        <Typography sx={{ mb: 1 }}>
-                            Durante a visita, você conhecerá o Livro de Aço, onde estão
-                            registrados nomes de personalidades importantes para a
-                            construção da nação, além de aprender sobre momentos marcantes
-                            da história brasileira, como a luta pela liberdade e democracia.
-                        </Typography>
-                        <Typography>
-                            O guia também apresenta detalhes artísticos, como o vitral de
-                            Marianne Peretti, que ilumina o ambiente com cores vibrantes,
-                            criando uma atmosfera única e simbólica.
+                            {roteiro?.descricao}
                         </Typography>
                     </Box>
                 </Box>

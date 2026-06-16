@@ -1,16 +1,19 @@
 
 import TabsElementos from "@/components/Agendamentos/TabsElementos";
+import { roteiroApi } from "@/services/api";
+import { Roteiro } from "@/types";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { useQuery } from "@tanstack/react-query";
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { ArrowLeft, Bookmark, HomeIcon, List, MapPin, MessageSquare, User } from "lucide-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 
 const ORANGE = "#F47B2A";
@@ -61,8 +64,15 @@ function Header() {
 
 export default function Agendamentos() {
   const [formData, setFormData] = useState(dayjs.tz(new Date(), 'America/Sao_Paulo'));
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate()
-  
+
+  const { data: roteiro, isLoading: isLoadingRoteiro } = useQuery({
+    queryKey: ["id_roteiro", id],
+    queryFn: () => roteiroApi.get<Roteiro>(`/${id}`),
+    enabled: !!id
+  })
+
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: BG }}>
@@ -74,10 +84,10 @@ export default function Agendamentos() {
           sx={{ alignItems: "center", justifyContent: "space-between", mb: 2 }}
         >
           <Typography sx={{ color: "#8a93a0", fontSize: 14 }}>
-            <Link to="/home/tela-avaliacao" style={{ color: "inherit", textDecoration: "none" }}>
+            <Link to={`/home/tela-avaliacao/${id}`} style={{ color: "inherit", textDecoration: "none" }}>
               catalogo
             </Link>{" "}
-            / <span style={{ color: ORANGE }}>Panteão Pátria Liberdade</span>
+            / <span style={{ color: ORANGE }}>{roteiro?.titulo}</span>
           </Typography>
           <Button
             variant="contained"
@@ -90,7 +100,7 @@ export default function Agendamentos() {
               fontWeight: 700,
               "&:hover": { bgcolor: "#162a4a" },
             }}
-            onClick={()=> navigate(-1)}
+            onClick={() => navigate(-1)}
           >
             Voltar
           </Button>
@@ -122,20 +132,15 @@ export default function Agendamentos() {
               variant="h4"
               sx={{ fontWeight: 800, color: NAVY, mb: 1.5 }}
             >
-              Panteão Pátria Liberdade
+              {roteiro?.titulo}
             </Typography>
             <Typography sx={{ color: "#3a4554", lineHeight: 1.55, mb: 2 }}>
-              Um marco da arquitetura moderna e espiritualidade. Projetada com
-              curvas que se elevam ao céu, a Catedral é famosa por seus
-              vitrais em tons de azul, verde e marrom que banham o interior
-              com uma luz celestial única. É um ponto obrigatório para quem
-              busca contemplar arte, história e um momento de paz no coração
-              da capital.
+              {roteiro?.descricao}
             </Typography>
             <Typography
               sx={{ color: ORANGE, fontWeight: 800, fontSize: 22, mb: 2 }}
             >
-              R$ 300, 00
+              R$ {roteiro?.preco.toFixed(2)}
             </Typography>
             <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
               <Stack direction="row" spacing={1}>
@@ -171,7 +176,7 @@ export default function Agendamentos() {
         </Box>
 
         <Box sx={{ mt: 4, borderBottom: "1px solid #d6dae0" }}>
-          <TabsElementos />
+          <TabsElementos roteiro={roteiro}/>
         </Box>
 
       </Container>
