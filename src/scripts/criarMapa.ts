@@ -16,7 +16,24 @@ export async function criarMapa({ mapRef, setWaypoints, mapContainer }: CriarMap
 
     const map = new maplibregl.Map({
         container: mapContainer.current,
-        style: "https://tiles.openfreemap.org/styles/liberty",
+        style: {
+            version: 8,
+            sources: {
+                'osm': {
+                    type: 'raster',
+                    tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+                    tileSize: 256,
+                    attribution: '© OpenStreetMap'
+                }
+            },
+            layers: [{
+                id: 'osm-layer',
+                type: 'raster',
+                source: 'osm',
+                minzoom: 0,
+                maxzoom: 19
+            }]
+        },
         center: [-47.8645, -15.7998],
         zoom: 12,
     });

@@ -38,7 +38,7 @@ export async function calcularRota({mapRef, waypoints}: CalcularRouteProps) {
                 .join(";");
 
             const response = await fetch(
-                `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&geometries=geojson`
+                `http://localhost:3000/osrm/route?coordinates=${coordinates}`
             );
 
             const data = await response.json();

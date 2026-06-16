@@ -4,6 +4,7 @@ import { useState } from "react";
 import TabDetalhes from "./Tabs/TabDetalhes";
 import Mapa from "../Mapa";
 import { Roteiro } from "@/types";
+import MapaEdit from "../MapaEdit";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -72,7 +73,7 @@ export default function TabsElementos({roteiro}: TabsElementosProps) {
                     display: "flex",
                     alignItems: "center",
                 }}>
-                    <Mapa />
+                    <MapaEdit />
                 </Box>
             </TabPanel>
         </>

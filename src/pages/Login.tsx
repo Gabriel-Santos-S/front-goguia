@@ -78,10 +78,11 @@ export default function Login() {
             />
             <div className="pt-2">
               <button
+                
                 type="submit"
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-full transition-colors"
               >
-                Entrar
+                {isLoading ? "verificando..." : "Entrar"}
               </button>
             </div>
           </form>

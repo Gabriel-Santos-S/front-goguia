@@ -27,7 +27,7 @@ export default function TabDetalhes({ roteiro }: TabDetalhesProps) {
                 <Stack spacing={2}>
                     <Box>
                         <Typography sx={{ color: NAVY, fontWeight: 700 }}>Local</Typography>
-                        <Typography sx={{ color: "#3a4554" }}>{roteiro.local}</Typography>
+                        <Typography sx={{ color: "#3a4554" }}>{roteiro?.local}</Typography>
                     </Box>
                     <Box>
                         <Typography sx={{ color: NAVY, fontWeight: 700 }}>
