@@ -35,7 +35,6 @@ export default function Login() {
     setErrorSubmit(false);
     setTextoErro("");
     onVerifcPassword();
-    navigate('/home');
   };
 
   return (
